@@ -68,10 +68,31 @@ button{
     font-weight: bolder;
 }
 
+button:hover{
+    border-bottom: 3px solid #667981;
+    background-color: #121e25;
+}
+
+
+button:active{
+    border-bottom: 3px solid #fff;
+    background-color: var(--color-5);
+}
+
 #AC{
     background-color: var(--color-3);
     color: var(--color-5);
     border-bottom: 5px solid #74561b;
+}
+
+#AC:hover{
+    background-color: #b98723;
+    border-bottom: 3px solid #74561b;
+}
+
+#AC:active{
+    background-color: var(--color-3);
+    border-bottom: 3px solid var(--color-2);
 }
 
 #zero{
@@ -82,4 +103,14 @@ button{
     background-color: var(--color-4);
     color: var(--color-5);
     border-bottom: 5px solid var(--color-5);
+}
+
+.operator:hover{
+    background-color:  #859ca7;
+    border-bottom: 3px solid var(--color-5);
+}
+
+.operator:active{
+    background-color: var(--color-4);
+    border-bottom: 3px solid #838383;
 }
