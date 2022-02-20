@@ -1,0 +1,12 @@
+Structure 
+
+
+main keys:
+
+state
+first number
+buttons
+arithmetic
+
+
+

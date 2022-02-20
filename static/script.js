@@ -1,39 +1,67 @@
+const semiOperators = document.getElementsByClassName("semi-operator");
+const arithmeticOperators = document.getElementsByClassName("operator")
 const numbersButton = document.getElementsByClassName("number")
-const clear = document.getElementById("AC")
-const currentNumText = document.getElementsByClassName("screen")[0]
-const operators = document.getElementsByClassName("operator")
-let operatorActive = false;
-let currentValue = 0;
+const backspaceButton = document.getElementById("CL")
+const clearButton = document.getElementById("AC")
+const screenText = document.getElementsByClassName("screen")[0]
 
-const getNum = (e) =>{
-    changeScreenText(e.target.textContent)
+// States
+let isFirstNumberActive = false;
+let currentNumber = 0;
+let currentNumberText = "";
+let isOperatorActive = false;
+
+
+const displayNumber = (e) => {
+    currentNumberText += e.target.textContent
+    screenText.textContent = currentNumberText
 }
 
-const resetAll = () => {
-    operatorActive = false;
-    currentValue = 0
-    currentNumText.textContent = currentValue
-}
-
-const changeScreenText = (num) => {
-    if(currentNumText.textContent == "0"){
-        currentNumText.textContent = "";
+const setFirstNumber = () => {
+    if(isOperatorActive == true && isFirstNumberActive == false){
+        currentNumber = Number(currentNumberText)
+        isFirstNumberActive = true;
+        return true;
     }
-    currentNumText.textContent += num;
+    return false;
+}
 
-    if(operatorActive === true){
-        currentValue += Number(currentNumText.textContent)
-        currentNumText.textContent = "0"
-        operatorActive = false;
+const itsComplicated = (e) => {
+    isOperatorActive = true;
+    if(setFirstNumber() != true){
+        combineNumber(e.target.id, Number(currentNumberText))
+    }
+    
+}
+
+const combineNumber = (chosenOperator, nextNum) => {
+    console.log(chosenOperator)
+    switch(chosenOperator){
+        case 'addition':
+            currentNumber += nextNum;
+            break;
+        case 'subtraction':
+            currentNumber -= nextNum;
+            break;
+        case 'multiplication':
+            currentNumber *= nextNum;
+            break;
+        case 'division':
+            currentNumber /= nextNum;
+            break;
     }
 }
 
-const setOperatorActive = () => {
-    operatorActive = true;
-}
+Array.from(numbersButton).forEach(number => number.addEventListener("click", displayNumber))
+Array.from(arithmeticOperators).forEach(number => number.addEventListener("click", itsComplicated))
 
-Array.from(numbersButton).forEach(num=>num.addEventListener("click", getNum))
-Array.from(operators).forEach(oper=> oper.addEventListener("click", setOperatorActive))
-clear.addEventListener("click", resetAll)
+
+
+
+
+
+
+
+
 
 
