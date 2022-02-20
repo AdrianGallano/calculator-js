@@ -58,6 +58,7 @@ body{
 }
 
 button{
+    transition: 0.1s;
     padding: .9em 1em;
     border-radius: 10px;
     border: none;
@@ -99,17 +100,20 @@ button:active{
     grid-column: 1/3;
 }
 
+.semi-operator,
 .operator{
     background-color: var(--color-4);
     color: var(--color-5);
     border-bottom: 5px solid var(--color-5);
 }
 
+.semi-operator:hover,
 .operator:hover{
     background-color:  #859ca7;
     border-bottom: 3px solid var(--color-5);
 }
 
+.semi-operator:active,
 .operator:active{
     background-color: var(--color-4);
     border-bottom: 3px solid #838383;

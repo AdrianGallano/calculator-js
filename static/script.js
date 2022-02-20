@@ -1,26 +1,39 @@
-let currentNum;
-let newNum;
+const numbersButton = document.getElementsByClassName("number")
+const clear = document.getElementById("AC")
+const currentNumText = document.getElementsByClassName("screen")[0]
+const operators = document.getElementsByClassName("operator")
+let operatorActive = false;
+let currentValue = 0;
 
-const addition = (newNum) => {
-    currentNum += newNum
+const getNum = (e) =>{
+    changeScreenText(e.target.textContent)
 }
 
-const subtraction = (newNum) => {
-    currentNum -= newNum
+const resetAll = () => {
+    operatorActive = false;
+    currentValue = 0
+    currentNumText.textContent = currentValue
 }
 
-const division = (newNum) => {
-    currentNum /= newNum
-}
+const changeScreenText = (num) => {
+    if(currentNumText.textContent == "0"){
+        currentNumText.textContent = "";
+    }
+    currentNumText.textContent += num;
 
-const mulitplication = (newNum) => {
-    currentNum *= newNum
-}
-
-
-const chooseOperator = () => {
-    return {
-        "": addition(),
-        
+    if(operatorActive === true){
+        currentValue += Number(currentNumText.textContent)
+        currentNumText.textContent = "0"
+        operatorActive = false;
     }
 }
+
+const setOperatorActive = () => {
+    operatorActive = true;
+}
+
+Array.from(numbersButton).forEach(num=>num.addEventListener("click", getNum))
+Array.from(operators).forEach(oper=> oper.addEventListener("click", setOperatorActive))
+clear.addEventListener("click", resetAll)
+
+
