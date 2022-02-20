@@ -58,6 +58,7 @@ body{
 }
 
 button{
+    transition: 0.1s;
     padding: .9em 1em;
     border-radius: 10px;
     border: none;
@@ -79,37 +80,39 @@ button:active{
     background-color: var(--color-5);
 }
 
-#AC{
+#AC
+,#CL{
     background-color: var(--color-3);
     color: var(--color-5);
     border-bottom: 5px solid #74561b;
 }
 
-#AC:hover{
+#AC:hover
+,#CL:hover{
     background-color: #b98723;
     border-bottom: 3px solid #74561b;
 }
 
-#AC:active{
+#AC:active
+,#CL:active{
     background-color: var(--color-3);
     border-bottom: 3px solid var(--color-2);
 }
 
-#zero{
-    grid-column: 1/3;
-}
-
+.semi-operator,
 .operator{
     background-color: var(--color-4);
     color: var(--color-5);
     border-bottom: 5px solid var(--color-5);
 }
 
+.semi-operator:hover,
 .operator:hover{
     background-color:  #859ca7;
     border-bottom: 3px solid var(--color-5);
 }
 
+.semi-operator:active,
 .operator:active{
     background-color: var(--color-4);
     border-bottom: 3px solid #838383;
