@@ -18,10 +18,7 @@ let previousOperator = ""
 
 const displayIndividualNumber = (e) => {
     limitNumInput()
-    if(isOperatorActive){
-        Array.from(arithmeticOperators).forEach(opr => opr.addEventListener("click", operator))
-        isOperatorActive = false;
-    }
+    putOperatorBack()
     if(currentNumberText == "" && e.target.textContent == '0'){
         currentNumberText = "";
     }else{
@@ -51,6 +48,7 @@ const clear = () => {
     currentOperator = "";
     previousOperator = ""
     removeOperatorActive()
+    putOperatorBack()
 }
 
 const getNum = () => {
@@ -113,6 +111,7 @@ const addDecimal = () => {
 
 const total = () => {
     operator("total")
+    putOperatorBack()
 }
 
 const combineNumber = (previousOperator) => {
@@ -176,10 +175,15 @@ const setIsOperatorActive = () => {
     isOperatorActive = true;
 }
 
-if(isOperatorActive == false){
-    Array.from(numbersButton).forEach(number => number.addEventListener("click", displayIndividualNumber))
+const putOperatorBack = () => {
+    if(isOperatorActive){
+        Array.from(arithmeticOperators).forEach(opr => opr.addEventListener("click", operator))
+        isOperatorActive = false;
+    }
 }
 
+
+Array.from(numbersButton).forEach(number => number.addEventListener("click", displayIndividualNumber))
 Array.from(arithmeticOperators).forEach(opr => opr.addEventListener("click", operator))
 
 clearButton.addEventListener("click", clear)
