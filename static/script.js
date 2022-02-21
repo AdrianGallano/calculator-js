@@ -83,6 +83,30 @@ const removeOperatorActive = () => {
         }
     })
 }
+
+
+const changeSign = () => {
+    if(currentNumberText.includes("-")){
+        currentNumberText = currentNumberText.slice(1,)
+        screenText.textContent = currentNumberText
+    }else{
+        currentNumberText = "-" + currentNumberText
+        screenText.textContent = currentNumberText
+    }
+}
+
+
+const percentage = () => {
+    currentNumberText = String(Number(currentNumberText) * 0.01)
+    screenText.textContent = currentNumberText
+}
+
+const addDecimal = () => {
+    if(!currentNumberText.includes(".")){
+        currentNumberText += "."
+        screenText.textContent = currentNumberText;
+    }
+}
 // no bugs up 
 
 
@@ -119,8 +143,6 @@ const finalDisplay = () => {
     currentNumberText = "";
 }
 
-
-
 const operator = (e) => {
     previousOperator = currentOperator
     if(e == "total"){
@@ -137,14 +159,16 @@ const operator = (e) => {
 }
 
 
+
 Array.from(numbersButton).forEach(number => number.addEventListener("click", displayIndividualNumber))
 Array.from(arithmeticOperators).forEach(opr => opr.addEventListener("click", operator))
 
 clearButton.addEventListener("click", clear)
 backspaceButton.addEventListener("click", backspace)
 equalButton.addEventListener("click", total)
-
-
+semiOperators[0].addEventListener("click", percentage)
+semiOperators[1].addEventListener("click", addDecimal)
+semiOperators[2].addEventListener("click", changeSign)
 
 
 
