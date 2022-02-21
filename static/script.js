@@ -4,6 +4,7 @@ const numbersButton = document.getElementsByClassName("number")
 const backspaceButton = document.getElementById("CL")
 const clearButton = document.getElementById("AC")
 const screenText = document.getElementsByClassName("screen")[0]
+const equalButton = document.getElementById("equal");
 
 // States
 let numHolder;
@@ -12,6 +13,7 @@ let isOperatorActive = false;
 let currentNumber = 0;
 let currentNumberText = "";
 let currentOperator = "";
+let previousOperator = ""
 
 
 const displayIndividualNumber = (e) => {
@@ -21,7 +23,7 @@ const displayIndividualNumber = (e) => {
         currentNumberText += e.target.textContent;
         screenText.textContent = currentNumberText;
     }
-    
+    removeOperatorActive()
 }
 
 const backspace = () => {
@@ -35,34 +37,119 @@ const backspace = () => {
 }
 
 const clear = () => {
-    currentNumberText = ""
     screenText.textContent = 0
+    numHolder;
+    isFirstNumberActive = false;
+    isOperatorActive = false;
+    currentNumber = 0;
+    currentNumberText = "";
+    currentOperator = "";
+    previousOperator = ""
+    removeOperatorActive()
 }
 
+const getNum = () => {
+    if(currentNumberText == ""){
+        numHolder = 0;
+    }else{
+        numHolder = Number(currentNumberText); 
+    }
+    return numHolder
+}
+
+const checkFirstNumberActive = () => {
+    if(!isFirstNumberActive){
+        isFirstNumberActive = true;
+        return false;
+    }
+    return true;
+}
+
+const setOperatorActive = (activeOperator) => {
+    Array.from(arithmeticOperators).forEach(btn => {
+        if(activeOperator == btn.id){
+            btn.classList.add("operator-active")
+        }else if(btn.classList.contains("operator-active")){
+            btn.classList.remove("operator-active")
+        }
+    })
+    
+}
+
+const removeOperatorActive = () => {
+    Array.from(arithmeticOperators).forEach(btn => {
+        if(btn.classList.contains("operator-active")){
+            btn.classList.remove("operator-active")
+        }
+    })
+}
+// no bugs up 
+
+
+const total = () => {
+    operator("total")
+}
+
+const combineNumber = (previousOperator) => {
+    if(!checkFirstNumberActive()){
+        currentNumber = getNum()
+        currentNumberText = ""
+    }else{
+        switch(previousOperator){
+            case "add":
+                currentNumber += getNum();
+
+                break;
+            case "subtract":
+                currentNumber -= getNum();
+                break;
+            case "divide":
+                currentNumber /= getNum();
+                break;
+            case "multiply":
+                currentNumber *= getNum();
+                break;
+        }
+    }
+}
+
+const finalDisplay = () => {
+    currentNumberText = currentNumber;
+    screenText.textContent = currentNumberText;
+    currentNumberText = "";
+}
+
+
+
 const operator = (e) => {
-    numHolder = Number(currentNumberText) 
-    currentOperator = e.target.id;
-    console.log(e.target.id)
-
-
+    previousOperator = currentOperator
+    if(e == "total"){
+        currentOperator = undefined
+    }else{
+        currentOperator = e.target.id;
+    }
+    if(currentOperator){
+        setOperatorActive(currentOperator)
+    }
+    combineNumber(previousOperator)
+    finalDisplay()
+    
 }
 
 
 Array.from(numbersButton).forEach(number => number.addEventListener("click", displayIndividualNumber))
 Array.from(arithmeticOperators).forEach(opr => opr.addEventListener("click", operator))
+
 clearButton.addEventListener("click", clear)
 backspaceButton.addEventListener("click", backspace)
-
-
-// try everytime we press an we receive two things
-// currentNumberText converted to number
-// the operator pressed 
-// if first number is not active assign it instead
-// and reset the currentNumberText
+equalButton.addEventListener("click", total)
 
 
 
 
+
+// Bugs 
+// we can't swap operators 
 
 
 
