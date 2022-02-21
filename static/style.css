@@ -112,11 +112,16 @@ button:active{
     border-bottom: 3px solid var(--color-5);
 }
 
-.semi-operator:active,
-.operator:active{
+.semi-operator:active{
     background-color: var(--color-4);
-    border-bottom: 3px solid #838383;
+    border-bottom: 3px solid #fff;
+}   
+
+.operator-active{
+    background-color: var(--color-4);
+    border-bottom: 3px solid #fff;
 }
+
 
 @media (max-width:850px){
     .calculator{
