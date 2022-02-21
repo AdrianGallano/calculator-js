@@ -17,6 +17,7 @@ let previousOperator = ""
 
 
 const displayIndividualNumber = (e) => {
+    limitNumInput()
     if(currentNumberText == "" && e.target.textContent == '0'){
         currentNumberText = "";
     }else{
@@ -84,7 +85,6 @@ const removeOperatorActive = () => {
     })
 }
 
-
 const changeSign = () => {
     if(currentNumberText.includes("-")){
         currentNumberText = currentNumberText.slice(1,)
@@ -94,7 +94,6 @@ const changeSign = () => {
         screenText.textContent = currentNumberText
     }
 }
-
 
 const percentage = () => {
     currentNumberText = String(Number(currentNumberText) * 0.01)
@@ -122,7 +121,6 @@ const combineNumber = (previousOperator) => {
         switch(previousOperator){
             case "add":
                 currentNumber += getNum();
-
                 break;
             case "subtract":
                 currentNumber -= getNum();
@@ -133,6 +131,10 @@ const combineNumber = (previousOperator) => {
             case "multiply":
                 currentNumber *= getNum();
                 break;
+        }
+        if(String(currentNumber).length > 10){
+            console.log("hit")
+            currentNumber = currentNumber.toExponential(4)
         }
     }
 }
@@ -155,7 +157,13 @@ const operator = (e) => {
     }
     combineNumber(previousOperator)
     finalDisplay()
-    
+}
+
+const limitNumInput = () => {
+    if(currentNumberText.length > 10){
+        currentNumberText = currentNumberText.slice(0, currentNumberText.length-2)
+    }
+    return currentNumberText
 }
 
 
