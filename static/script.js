@@ -18,6 +18,10 @@ let previousOperator = ""
 
 const displayIndividualNumber = (e) => {
     limitNumInput()
+    if(isOperatorActive){
+        Array.from(arithmeticOperators).forEach(opr => opr.addEventListener("click", operator))
+        isOperatorActive = false;
+    }
     if(currentNumberText == "" && e.target.textContent == '0'){
         currentNumberText = "";
     }else{
@@ -106,8 +110,6 @@ const addDecimal = () => {
         screenText.textContent = currentNumberText;
     }
 }
-// no bugs up 
-
 
 const total = () => {
     operator("total")
@@ -133,7 +135,6 @@ const combineNumber = (previousOperator) => {
                 break;
         }
         if(String(currentNumber).length > 10){
-            console.log("hit")
             currentNumber = currentNumber.toExponential(4)
         }
     }
@@ -141,11 +142,15 @@ const combineNumber = (previousOperator) => {
 
 const finalDisplay = () => {
     currentNumberText = currentNumber;
+    if(currentNumberText == "Infinity"){
+        currentNumberText = "lmao";
+    }
     screenText.textContent = currentNumberText;
     currentNumberText = "";
 }
 
 const operator = (e) => {
+    setIsOperatorActive()
     previousOperator = currentOperator
     if(e == "total"){
         currentOperator = undefined
@@ -166,9 +171,15 @@ const limitNumInput = () => {
     return currentNumberText
 }
 
+const setIsOperatorActive = () => {
+    Array.from(arithmeticOperators).forEach(opr => opr.removeEventListener("click", operator))
+    isOperatorActive = true;
+}
 
+if(isOperatorActive == false){
+    Array.from(numbersButton).forEach(number => number.addEventListener("click", displayIndividualNumber))
+}
 
-Array.from(numbersButton).forEach(number => number.addEventListener("click", displayIndividualNumber))
 Array.from(arithmeticOperators).forEach(opr => opr.addEventListener("click", operator))
 
 clearButton.addEventListener("click", clear)
@@ -177,11 +188,3 @@ equalButton.addEventListener("click", total)
 semiOperators[0].addEventListener("click", percentage)
 semiOperators[1].addEventListener("click", addDecimal)
 semiOperators[2].addEventListener("click", changeSign)
-
-
-
-// Bugs 
-// we can't swap operators 
-
-
-
