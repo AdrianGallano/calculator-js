@@ -6,58 +6,59 @@ const clearButton = document.getElementById("AC")
 const screenText = document.getElementsByClassName("screen")[0]
 
 // States
+let numHolder;
 let isFirstNumberActive = false;
+let isOperatorActive = false;
 let currentNumber = 0;
 let currentNumberText = "";
-let isOperatorActive = false;
+let currentOperator = "";
 
 
-const displayNumber = (e) => {
-    currentNumberText += e.target.textContent
-    screenText.textContent = currentNumberText
-}
-
-const setFirstNumber = () => {
-    if(isOperatorActive == true && isFirstNumberActive == false){
-        currentNumber = Number(currentNumberText)
-        isFirstNumberActive = true;
-        return true;
-    }
-    return false;
-}
-
-const itsComplicated = (e) => {
-    isOperatorActive = true;
-    if(setFirstNumber() != true){
-        combineNumber(e.target.id, Number(currentNumberText))
+const displayIndividualNumber = (e) => {
+    if(currentNumberText == "" && e.target.textContent == '0'){
+        currentNumberText = "";
+    }else{
+        currentNumberText += e.target.textContent;
+        screenText.textContent = currentNumberText;
     }
     
 }
 
-const combineNumber = (chosenOperator, nextNum) => {
-    console.log(chosenOperator)
-    switch(chosenOperator){
-        case 'addition':
-            currentNumber += nextNum;
-            break;
-        case 'subtraction':
-            currentNumber -= nextNum;
-            break;
-        case 'multiplication':
-            currentNumber *= nextNum;
-            break;
-        case 'division':
-            currentNumber /= nextNum;
-            break;
+const backspace = () => {
+    if(currentNumberText.length > 1){
+        currentNumberText = currentNumberText.slice(0, currentNumberText.length-1)
+        screenText.textContent = currentNumberText
+    }else{
+        currentNumberText = ""
+        screenText.textContent = 0
     }
 }
 
-Array.from(numbersButton).forEach(number => number.addEventListener("click", displayNumber))
-Array.from(arithmeticOperators).forEach(number => number.addEventListener("click", itsComplicated))
+const clear = () => {
+    currentNumberText = ""
+    screenText.textContent = 0
+}
+
+const operator = (e) => {
+    numHolder = Number(currentNumberText) 
+    currentOperator = e.target.id;
+    console.log(e.target.id)
 
 
+}
 
 
+Array.from(numbersButton).forEach(number => number.addEventListener("click", displayIndividualNumber))
+Array.from(arithmeticOperators).forEach(opr => opr.addEventListener("click", operator))
+clearButton.addEventListener("click", clear)
+backspaceButton.addEventListener("click", backspace)
+
+
+// try everytime we press an we receive two things
+// currentNumberText converted to number
+// the operator pressed 
+// if first number is not active assign it instead
+// and reset the currentNumberText
 
 
 
